@@ -288,6 +288,32 @@
             gap: 0.5rem;
         }
 
+        /* Cart Button Styles */
+        .cart-btn {
+            position: relative;
+            cursor: pointer;
+            margin-left: 1rem;
+            color: var(--dark-text);
+            font-size: 1.2rem;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: none;
+        }
+
         /* ===== MOBILE MENU ===== */
         .mobile-menu {
             position: fixed;
@@ -605,6 +631,15 @@
             gap: 1rem;
             flex-wrap: wrap;
             margin-top: auto;
+        }
+
+        .add-to-cart-btn {
+            background-color: var(--accent-orange);
+            color: var(--white);
+        }
+
+        .add-to-cart-btn:hover {
+            background-color: #e68a00;
         }
 
         .load-more {
@@ -1212,6 +1247,81 @@
             flex-wrap: wrap;
         }
 
+        /* ===== CART MODAL ===== */
+        .cart-modal .modal-content {
+            max-width: 500px;
+        }
+
+        .cart-items {
+            max-height: 400px;
+            overflow-y: auto;
+            margin-bottom: 1.5rem;
+        }
+
+        .cart-item {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--light-bg);
+            gap: 1rem;
+        }
+
+        .cart-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: var(--border-radius);
+        }
+
+        .cart-item-details {
+            flex: 1;
+        }
+
+        .cart-item-details h4 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-text);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .remove-item {
+            background: none;
+            border: none;
+            color: #ff5252;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .remove-item:hover {
+            transform: scale(1.2);
+        }
+
+        .cart-summary {
+            background-color: var(--light-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+        }
+
+        .cart-total, .cart-points {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .cart-total span:last-child {
+            color: var(--primary-green);
+            font-size: 1.2rem;
+        }
+
+        .cart-points span:last-child {
+            color: var(--accent-orange);
+        }
+
         /* ===== GROCERY MODAL ===== */
         .grocery-modal .modal-content {
             max-width: 600px;
@@ -1416,6 +1526,30 @@
             transform: rotate(15deg);
         }
 
+        /* ===== NOTIFICATIONS ===== */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--primary-green);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow-lg);
+            z-index: 3000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification.error {
+            background-color: #ff5252;
+        }
+
         /* ===== MEDIA QUERIES ===== */
         @media (max-width: 992px) {
             .nav-links {
@@ -1553,7 +1687,7 @@
     <!-- Mobile Menu -->
     <div class="mobile-menu">
         <div class="mobile-menu-header">
-            <div class="mobile-logo">FreshHarvest</div>
+            <div class="mobile-logo"></div>
             <div class="close-menu">
                 <i class="fas fa-times"></i>
             </div>
@@ -1577,7 +1711,7 @@
         <div class="container">
             <div class="logo-container">
                 <img src="images/nloogo (1).jpeg" alt="FreshHarvest Logo" class="logo-img">
-                <div class="logo-text">FreshHarvest</div>
+                <div class="logo-text"></div>
             </div>
             <div class="menu-toggle">
                 <span></span>
@@ -1595,6 +1729,10 @@
             <div class="nav-cta">
                 <a href="https://wa.me/265999235420" class="whatsapp-btn" aria-label="Chat on WhatsApp"><i class="fab fa-whatsapp"></i></a>
                 <a href="tel:+265999235420" class="call-btn" aria-label="Call Now"><i class="fas fa-phone"></i></a>
+                <div class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count" class="cart-count">0</span>
+                </div>
             </div>
         </div>
     </nav>
@@ -1602,7 +1740,7 @@
     <!-- Hero Section -->
     <section class="hero" id="home">
         <div class="hero-content">
-            <h1 class="hero-title">Lilongwe loft</h1>
+            <h1 class="hero-title"></h1>
             <p class="hero-subtitle">Farm-fresh vegetables delivered straight to your doorstep</p>
             <div class="hero-buttons">
                 <a href="#products" class="btn-primary"><i class="fas fa-shopping-basket"></i> Our Products</a>
@@ -1645,7 +1783,7 @@
                     <p>Juicy and ripe, perfect for salads and cooking</p>
                     <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Fresh%20Tomatoes" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="tomatoes" data-name="Fresh Tomatoes" data-price="1500" data-image="images/tomatoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="tomatoes"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1661,7 +1799,7 @@
                     <p>Sweet and crunchy, rich in vitamin A</p>
                     <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Fresh%20Carrots" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="carrots" data-name="Fresh Carrots" data-price="1200" data-image="images/carrot.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="carrots"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1678,7 +1816,7 @@
                     <p>Strong flavor, perfect for all dishes</p>
                     <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Fresh%20Onions" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="onions" data-name="Fresh Onions" data-price="1000" data-image="images/oinons.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="onions"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1694,7 +1832,7 @@
                     <p>Sweet and nutritious, great for snacks</p>
                     <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Ripe%20Bananas" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="bananas" data-name="Ripe Bananas" data-price="800" data-image="images/banana.jpg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="bananas"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1709,9 +1847,9 @@
                 <div class="product-details">
                     <h3>Sweet Mangoes</h3>
                     <p>Juicy and flavorful, limited season</p>
-                    <div class="product-price">MK 1,500/kg</div>
+                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Sweet%20Mangoes" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="mangoes" data-name="Sweet Mangoes" data-price="1200" data-image="images/mangoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="mangoes"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1727,7 +1865,7 @@
                     <p>Aromatic herb for cooking and teas</p>
                     <div class="product-price"></div>
                     <div class="product-actions">
-                        <a href="https://wa.me/265999235420?text=I%20want%20to%20order:%20Fresh%20Basil" class="btn-primary"><i class="fab fa-whatsapp"></i> Order Now</a>
+                        <button class="btn-primary add-to-cart-btn" data-id="basil" data-name="Fresh Basil" data-price="500" data-image="images/herbla.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="basil"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1824,19 +1962,19 @@
                 </div>
             </div>
             <div class="about-content">
-                <h2 class="about-title">ABOUT <span>FRESHHARVEST</span></h2>
+                <h2 class="about-title">ABOUT <span>LILONGWE LOFT</span></h2>
                 <p class="about-text">Founded in 2010, FreshHarvest has been providing the freshest vegetables to Lilongwe residents. We partner with local farmers to bring you pesticide-free, organic produce at affordable prices.</p>
                 <div class="about-stats">
                     <div class="stat-item">
-                        <div class="stat-number" data-count="50">0</div>
+                        <div class="stat-number" data-count="7">0</div>
                         <div class="stat-label">Local Farmers</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-count="1000">0</div>
+                        <div class="stat-number" data-count="50">0</div>
                         <div class="stat-label">Happy Customers</div>
                     </div>
                     <div class="stat-item">
-                        <div class="stat-number" data-count="13">0</div>
+                        <div class="stat-number" data-count="3">0</div>
                         <div class="stat-label">Years Experience</div>
                     </div>
                 </div>
@@ -1872,6 +2010,7 @@
                     <div class="info-content">
                         <h3>Email</h3>
                         <p>solomonslimykavuta@gmail.com</p>
+                           <p>Ekapida25@gmail.com</p>
                     </div>
                 </div>
                 <div class="contact-social">
@@ -1924,6 +2063,7 @@
                     <li><i class="fas fa-map-marker-alt"></i> Lilongwe, Area 12</li>
                     <li><i class="fas fa-phone"></i> +265 999 235 420</li>
                     <li><i class="fas fa-envelope"></i> solomonslimykavuta@gmail.com</li>
+                    <li><i class="fas fa-envelope"></i> Ekapida25@gmail.com</li>
                 </ul>
             </div>
         </div>
@@ -1980,10 +2120,34 @@
                     <div class="modal-price" id="modal-product-price"></div>
                     <p class="modal-description" id="modal-product-description"></p>
                     <div class="modal-actions">
-                        <a href="#" class="btn-primary" id="modal-whatsapp-btn"><i class="fab fa-whatsapp"></i> Order via WhatsApp</a>
+                        <button class="btn-primary add-to-cart-btn" id="modal-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary close-modal-btn"><i class="fas fa-times"></i> Close</button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div class="modal cart-modal" id="cart-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Your Shopping Cart</h3>
+            <div class="cart-items" id="cart-items">
+                <p>Your cart is empty</p>
+            </div>
+            <div class="cart-summary">
+                <div class="cart-total">
+                    <span>Total:</span>
+                    <span id="cart-total-amount">MK 0</span>
+                </div>
+                <div class="cart-points">
+                    <span>Loyalty Points:</span>
+                    <span id="cart-points">0 pts</span>
+                </div>
+                <a href="https://wa.me/265999235420" class="btn-primary" id="whatsapp-checkout">
+                    <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
+                </a>
             </div>
         </div>
     </div>
@@ -2032,6 +2196,24 @@
                 setTimeout(() => preloader.style.display = 'none', 500);
             });
 
+            // Restore typing animation for "Lilongwe Loft"
+            const heroTitle = document.querySelector('.hero-title');
+            const titleText = " Lilongwe Loft";
+            let charIndex = 0;
+            
+            function typeTitle() {
+                if (charIndex < titleText.length) {
+                    heroTitle.textContent += titleText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeTitle, 100); // Adjust typing speed here
+                } else {
+                    heroTitle.style.borderRight = 'none'; // Remove cursor after typing
+                }
+            }
+            
+            // Start typing animation
+            setTimeout(typeTitle, 1000);
+
             // Navbar Scroll Effect
             const navbar = document.querySelector('.navbar');
             window.addEventListener('scroll', () => {
@@ -2053,8 +2235,8 @@
             });
 
             closeMenu.addEventListener('click', () => {
-                menuToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
             });
 
             // Close mobile menu when clicking links
@@ -2077,7 +2259,7 @@
                 
                 window.open(whatsappUrl, '_blank');
                 contactForm.reset();
-                alert('Thank you! Your message has been opened in WhatsApp.');
+                showNotification('Thank you! Your message has been opened in WhatsApp.');
             });
 
             // Category Filtering
@@ -2126,71 +2308,243 @@
                 }
             });
 
-            // Quick View Modal
-            const modal = document.getElementById('product-modal');
-            const groceryModal = document.getElementById('grocery-modal');
-            const quickViewBtns = document.querySelectorAll('.quick-view-btn');
-            const closeModalBtn = document.querySelector('.close-modal');
-            const closeModalBtn2 = document.querySelector('.close-modal-btn');
-            
             // Product data for modal
             const productsData = {
                 'tomatoes': {
+                    id: 'tomatoes',
                     name: 'Fresh Tomatoes',
                     description: 'Juicy and ripe tomatoes, freshly picked from our farms. Perfect for salads, sauces, and cooking. Grown without harmful pesticides. Our tomatoes are hand-picked daily to ensure maximum freshness and flavor.',
-                    image: 'images/tomatoes.jpeg'
+                    image: 'images/tomatoes.jpeg',
+                    price: 'MK 1,500/kg',
+                    priceValue: 1500,
+                    category: 'vegetables'
                 },
                 'carrots': {
+                    id: 'carrots',
                     name: 'Fresh Carrots',
                     description: 'Sweet and crunchy carrots, rich in vitamin A and antioxidants. Great for snacking, juicing, or cooking. Grown in nutrient-rich soil, our carrots are crisp, sweet, and packed with nutrition.',
-                    image: 'images/carrot.jpeg'
+                    image: 'images/carrot.jpeg',
+                    price: 'MK 1,200/kg',
+                    priceValue: 1200,
+                    category: 'vegetables'
                 },
                 'onions': {
+                    id: 'onions',
                     name: 'Fresh Onions',
                     description: 'Strong-flavored onions perfect for all your cooking needs. Adds depth and flavor to any dish. Our onions are sun-dried for optimal storage and deliver that perfect punch of flavor to your meals.',
-                    image: 'images/oinons.jpeg'
+                    image: 'images/oinons.jpeg',
+                    price: 'MK 1,000/kg',
+                    priceValue: 1000,
+                    category: 'vegetables'
                 },
                 'bananas': {
+                    id: 'bananas',
                     name: 'Ripe Bananas',
                     description: 'Sweet and nutritious bananas, perfect for snacks or smoothies. A great source of potassium and natural energy. Grown on our local plantations, these bananas are tree-ripened for perfect sweetness.',
-                    image: 'images/bananas.jpeg'
+                    image: 'images/banana.jpg',
+                    price: 'MK 800/bunch',
+                    priceValue: 800,
+                    category: 'fruits'
                 },
                 'mangoes': {
+                    id: 'mangoes',
                     name: 'Sweet Mangoes',
                     description: 'Juicy and flavorful mangoes, available seasonally. A tropical treat that\'s perfect for desserts or eating fresh. Our mangoes are hand-selected at peak ripeness for that perfect balance of sweetness and tang.',
-                    image: 'images/mangoes.jpeg'
+                    image: 'images/mangoes.jpeg',
+                    price: 'MK 1,200/kg',
+                    priceValue: 1200,
+                    category: 'fruits'
                 },
                 'basil': {
+                    id: 'basil',
                     name: 'Fresh Basil',
                     description: 'Aromatic basil leaves perfect for cooking, teas, or garnishing. Adds a fresh flavor to Italian and Asian dishes. Grown in our herb garden, this basil is pesticide-free and packed with flavor.',
-                    image: 'images/basil.jpeg'
+                    image: 'images/herbla.jpeg',
+                    price: 'MK 500/bunch',
+                    priceValue: 500,
+                    category: 'herbs'
                 }
             };
 
+            // Shopping Cart System
+            class ShoppingCart {
+                constructor() {
+                    this.items = [];
+                    this.total = 0;
+                    this.points = 0;
+                    this.loadFromLocalStorage();
+                    this.updateCartUI();
+                }
+
+                addItem(product, quantity = 1) {
+                    const existingItem = this.items.find(item => item.id === product.id);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += quantity;
+                    } else {
+                        this.items.push({
+                            ...product,
+                            quantity: quantity
+                        });
+                    }
+                    
+                    this.calculateTotal();
+                    this.saveToLocalStorage();
+                    this.updateCartUI();
+                    showNotification(`${product.name} added to cart!`);
+                }
+
+                removeItem(productId) {
+                    this.items = this.items.filter(item => item.id !== productId);
+                    this.calculateTotal();
+                    this.saveToLocalStorage();
+                    this.updateCartUI();
+                    showNotification('Item removed from cart');
+                }
+
+                calculateTotal() {
+                    this.total = this.items.reduce((sum, item) => {
+                        return sum + (item.priceValue * item.quantity);
+                    }, 0);
+                    
+                    // Calculate points (1 point for every MK 1000 spent)
+                    this.points = Math.floor(this.total / 1000);
+                }
+
+                saveToLocalStorage() {
+                    localStorage.setItem('freshHarvestCart', JSON.stringify(this.items));
+                }
+
+                loadFromLocalStorage() {
+                    const savedCart = localStorage.getItem('freshHarvestCart');
+                    if (savedCart) {
+                        this.items = JSON.parse(savedCart);
+                        this.calculateTotal();
+                    }
+                }
+
+                clearCart() {
+                    this.items = [];
+                    this.total = 0;
+                    this.points = 0;
+                    localStorage.removeItem('freshHarvestCart');
+                    this.updateCartUI();
+                }
+
+                updateCartUI() {
+                    const cartCount = document.getElementById('cart-count');
+                    const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
+                    
+                    if (cartCount) {
+                        cartCount.textContent = totalItems;
+                        cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+                    }
+                }
+
+                renderCartItems() {
+                    const cartItemsContainer = document.getElementById('cart-items');
+                    const cartTotalAmount = document.getElementById('cart-total-amount');
+                    const cartPoints = document.getElementById('cart-points');
+                    const whatsappCheckout = document.getElementById('whatsapp-checkout');
+                    
+                    if (this.items.length === 0) {
+                        cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
+                        cartTotalAmount.textContent = 'MK 0';
+                        cartPoints.textContent = '0 pts';
+                        return;
+                    }
+                    
+                    // Generate cart items HTML
+                    let itemsHTML = '';
+                    this.items.forEach(item => {
+                        itemsHTML += `
+                            <div class="cart-item" data-id="${item.id}">
+                                <img src="${item.image}" alt="${item.name}" loading="lazy">
+                                <div class="cart-item-details">
+                                    <h4>${item.name}</h4>
+                                    <p>${item.price} × ${item.quantity}</p>
+                                </div>
+                                <div class="cart-item-actions">
+                                    <button class="remove-item" data-id="${item.id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    
+                    cartItemsContainer.innerHTML = itemsHTML;
+                    cartTotalAmount.textContent = `MK ${this.total.toLocaleString()}`;
+                    cartPoints.textContent = `${this.points} pts`;
+                    
+                    // Update WhatsApp checkout link
+                    const checkoutMessage = this.generateCheckoutMessage();
+                    whatsappCheckout.href = `https://wa.me/265999235420?text=${encodeURIComponent(checkoutMessage)}`;
+                }
+
+                generateCheckoutMessage() {
+                    let message = "Hello FreshHarvest! I'd like to place an order:\n\n";
+                    
+                    this.items.forEach(item => {
+                        message += `- ${item.name} (${item.price}) × ${item.quantity}\n`;
+                    });
+                    
+                    message += `\nTotal: MK ${this.total.toLocaleString()}\n`;
+                    message += `Loyalty Points: ${this.points} pts\n\n`;
+                    message += "Please confirm availability and delivery time. Thank you!";
+                    
+                    return message;
+                }
+            }
+
+            // Initialize cart
+            const cart = new ShoppingCart();
+
+            // Quick View Modal
+            const productModal = document.getElementById('product-modal');
+            const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+            const closeModalBtns = document.querySelectorAll('.close-modal, .close-modal-btn');
+            
             quickViewBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const productId = btn.dataset.product;
                     const product = productsData[productId];
                     
-                    document.getElementById('modal-product-name').textContent = product.name;
-                    document.getElementById('modal-product-price').textContent = product.price;
-                    document.getElementById('modal-product-description').textContent = product.description;
-                    document.getElementById('modal-product-image').src = product.image;
-                    document.getElementById('modal-product-image').alt = product.name;
-                    
-                    const whatsappBtn = document.getElementById('modal-whatsapp-btn');
-                    whatsappBtn.href = `https://wa.me/265999235420?text=I%20want%20to%20order:%20${encodeURIComponent(product.name)}`;
-                    
-                    modal.style.display = 'block';
-                    document.body.style.overflow = 'hidden';
+                    if (product) {
+                        document.getElementById('modal-product-name').textContent = product.name;
+                        document.getElementById('modal-product-price').textContent = product.price;
+                        document.getElementById('modal-product-description').textContent = product.description;
+                        document.getElementById('modal-product-image').src = product.image;
+                        document.getElementById('modal-product-image').alt = product.name;
+                        
+                        // Update add to cart button in modal
+                        const modalAddToCart = document.getElementById('modal-add-to-cart');
+                        modalAddToCart.dataset.id = product.id;
+                        modalAddToCart.dataset.name = product.name;
+                        modalAddToCart.dataset.price = product.priceValue;
+                        modalAddToCart.dataset.image = product.image;
+                        
+                        productModal.style.display = 'block';
+                        document.body.style.overflow = 'hidden';
+                    }
                 });
+            });
+
+            // Cart Modal
+            const cartModal = document.getElementById('cart-modal');
+            const cartBtn = document.querySelector('.cart-btn');
+            
+            cartBtn.addEventListener('click', () => {
+                cart.renderCartItems();
+                cartModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
             });
 
             // Grocery delivery quick view
             document.querySelectorAll('[href="#groceries"]').forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
-                    groceryModal.style.display = 'block';
+                    document.getElementById('grocery-modal').style.display = 'block';
                     document.body.style.overflow = 'hidden';
                     // Smooth scroll to groceries section after modal closes
                     const groceriesSection = document.getElementById('groceries');
@@ -2200,23 +2554,52 @@
                 });
             });
 
-            closeModalBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-                groceryModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-            });
-
-            closeModalBtn2.addEventListener('click', () => {
-                modal.style.display = 'none';
-                groceryModal.style.display = 'none';
-                document.body.style.overflow = 'auto';
+            // Close all modals
+            closeModalBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = 'auto';
+                });
             });
 
             window.addEventListener('click', (e) => {
-                if (e.target === modal || e.target === groceryModal) {
-                    modal.style.display = 'none';
-                    groceryModal.style.display = 'none';
+                if (e.target.classList.contains('modal')) {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
                     document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Add to cart functionality
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('add-to-cart-btn') || e.target.closest('.add-to-cart-btn')) {
+                    const btn = e.target.classList.contains('add-to-cart-btn') ? 
+                        e.target : e.target.closest('.add-to-cart-btn');
+                    
+                    const product = {
+                        id: btn.dataset.id,
+                        name: btn.dataset.name,
+                        price: btn.dataset.price,
+                        priceValue: parseInt(btn.dataset.price),
+                        image: btn.dataset.image,
+                        category: productsData[btn.dataset.id]?.category || 'vegetables'
+                    };
+                    
+                    cart.addItem(product);
+                }
+            });
+
+            // Remove item from cart
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
+                    const btn = e.target.classList.contains('remove-item') ? 
+                        e.target : e.target.closest('.remove-item');
+                    
+                    const productId = btn.dataset.id;
+                    cart.removeItem(productId);
                 }
             });
 
@@ -2257,43 +2640,39 @@
             const currentYear = document.getElementById('current-year');
             currentYear.textContent = new Date().getFullYear();
 
+            // Notification System
+            function showNotification(message, type = 'success') {
+                // Remove existing notifications first to prevent stacking
+                const existingNotifs = document.querySelectorAll('.notification');
+                existingNotifs.forEach(notif => notif.remove());
+                
+                const notification = document.createElement('div');
+                notification.className = `notification ${type}`;
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // Trigger animation
+                setTimeout(() => {
+                    notification.classList.add('show');
+                }, 10);
+                
+                // Auto-remove after 3 seconds
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                    setTimeout(() => {
+                        if (notification.parentNode) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }, 3000);
+            }
+
             // Veggie AI Assistant
             const aiToggle = document.querySelector('.ai-toggle');
             const aiChat = document.querySelector('.ai-chat');
             const aiInput = document.getElementById('ai-input');
             const aiSend = document.getElementById('ai-send');
             const aiMessages = document.querySelector('.ai-messages');
-
-            // Knowledge base for the AI
-            const aiKnowledge = {
-                greetings: ["hi", "hello", "hey"],
-                products: ["products", "items", "vegetables", "fruits", "herbs"],
-                prices: ["price", "cost", "how much"],
-                delivery: ["delivery", "deliver", "ship", "shipping"],
-                location: ["location", "where", "address"],
-                contact: ["contact", "phone", "number", "email"],
-                hours: ["hours", "open", "close", "time"],
-                payment: ["payment", "pay", "credit", "cash"],
-                about: ["about", "story", "history"],
-                thanks: ["thanks", "thank you", "appreciate"],
-                groceries: ["groceries", "supermarket", "shop", "shopping"]
-            };
-
-            // Responses for the AI
-            const aiResponses = {
-                greetings: "Hello there! 🥕 How can I help you today?",
-                products: "We offer a wide variety of fresh produce including tomatoes, carrots, onions, bananas, mangoes, and herbs like basil. You can browse all our products in the Products section!",
-                prices: "Our prices are very competitive! For example: Tomatoes (MK 1,500/kg), Carrots (MK 1,200/kg), Onions (MK 1,000/kg), Bananas (MK 800/bunch). Would you like to know about a specific item?",
-                delivery: "We offer free delivery within Lilongwe for orders over MK 5,000. Delivery usually takes 1-2 business days. Outside Lilongwe, delivery fees vary based on location.",
-                location: "Our farm and market is located at Lilongwe, Area 12, Fresh Produce Market. We're open Monday to Saturday from 7AM to 6PM.",
-                contact: "You can reach us at: Phone - +265 999 235 420, Email - solomonslimykavuta@gmail.com, WhatsApp - +265 999 235 420",
-                hours: "We're open Monday to Saturday from 7AM to 6PM. Closed on Sundays and public holidays.",
-                payment: "We accept cash on delivery, mobile money (Airtel Money & TNM Mpamba), and bank transfers. Unfortunately we don't accept credit cards at this time.",
-                about: "FreshHarvest was founded in 2010 with a mission to provide fresh, organic produce to Lilongwe residents. We work directly with local farmers to bring you the best quality vegetables and fruits.",
-                thanks: "You're very welcome! 😊 Is there anything else I can help you with?",
-                groceries: "We offer grocery delivery service from your favorite stores in Lilongwe! Delivery times are 6-7 PM and 8-10 PM daily. Just send us your shopping list via WhatsApp and we'll handle the rest!",
-                default: "I'm sorry, I didn't understand that. Could you try asking in a different way? I can tell you about our products, prices, delivery options, or anything else about FreshHarvest!"
-            };
 
             // Function to add a message to the chat
             function addMessage(content, isUser = false) {
@@ -2302,7 +2681,7 @@
                 
                 const contentDiv = document.createElement('div');
                 contentDiv.className = `message-content ${isUser ? 'user-message' : 'bot-message'}`;
-                contentDiv.textContent = content;
+                contentDiv.innerHTML = content.replace(/\n/g, '<br>');
                 
                 const timeDiv = document.createElement('div');
                 timeDiv.className = 'message-time';
@@ -2312,41 +2691,21 @@
                 messageDiv.appendChild(timeDiv);
                 aiMessages.appendChild(messageDiv);
                 
-                // Scroll to bottom
-                aiMessages.scrollTop = aiMessages.scrollHeight;
-            }
-
-            // Function to process user input and generate response
-            function processInput(input) {
-                input = input.toLowerCase();
-                
-                // Check for matches in knowledge base
-                for (const [category, keywords] of Object.entries(aiKnowledge)) {
-                    if (keywords.some(keyword => input.includes(keyword))) {
-                        return aiResponses[category];
-                    }
-                }
-                
-                // Default response if no matches found
-                return aiResponses.default;
+                // Scroll to bottom with smooth behavior
+                aiMessages.scrollTo({
+                    top: aiMessages.scrollHeight,
+                    behavior: 'smooth'
+                });
             }
 
             // Toggle chat visibility
             aiToggle.addEventListener('click', () => {
                 aiToggle.classList.toggle('active');
                 aiChat.classList.toggle('active');
-                
-                // Add pulse animation when opening
-                if (aiChat.classList.contains('active')) {
-                    aiToggle.style.animation = 'none';
-                    setTimeout(() => {
-                        aiToggle.style.animation = '';
-                    }, 10);
-                }
             });
 
-            // Send message when button is clicked
-            aiSend.addEventListener('click', () => {
+            // Send message
+            function sendAIMessage() {
                 const message = aiInput.value.trim();
                 if (message) {
                     addMessage(message, true);
@@ -2356,37 +2715,40 @@
                     setTimeout(() => {
                         const response = processInput(message);
                         addMessage(response);
-                    }, 1000);
+                    }, 500); // Reduced delay for better responsiveness
                 }
-            });
+            }
 
-            // Send message when Enter is pressed
+            aiSend.addEventListener('click', sendAIMessage);
             aiInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') {
-                    aiSend.click();
+                    sendAIMessage();
                 }
             });
 
-            // Sample questions for user to try
-            const sampleQuestions = [
-                "What products do you have?",
-                "How much are your tomatoes?",
-                "Do you deliver to Area 10?",
-                "What are your opening hours?",
-                "How can I contact you?",
-                "Do you deliver groceries?"
-            ];
-
-            // Add sample questions after a delay
-            setTimeout(() => {
-                addMessage("Try asking me things like:");
+            // Simple AI processing
+            function processInput(input) {
+                input = input.toLowerCase();
                 
-                sampleQuestions.forEach((question, index) => {
-                    setTimeout(() => {
-                        addMessage(question);
-                    }, (index + 1) * 300);
-                });
-            }, 3000);
+                if (input.includes('hello') || input.includes('hi')) {
+                    return "Hello there! 🥕 How can I help you today?";
+                } else if (input.includes('product') || input.includes('item')) {
+                    return "We offer fresh vegetables, fruits, and herbs! Check our Products section for details.";
+                } else if (input.includes('price') || input.includes('cost')) {
+                    return "Our prices are very competitive! For example: Tomatoes (MK 1,500/kg), Carrots (MK 1,200/kg).";
+                } else if (input.includes('deliver') || input.includes('ship')) {
+                    return "We deliver in Lilongwe daily between 6-10 PM. Free for orders over MK 5,000!";
+                } else if (input.includes('cart') || input.includes('order')) {
+                    return "You can add items to your cart and checkout via WhatsApp. Just click the cart icon!";
+                } else {
+                    return "I'm happy to help! You can ask about our products, prices, or delivery options.";
+                }
+            }
+
+            // Add welcome message after a short delay
+            setTimeout(() => {
+                addMessage("Hi there! I'm Carli the Carrot 🥕 How can I help you today?");
+            }, 1500);
         });
     </script>
 </body>
