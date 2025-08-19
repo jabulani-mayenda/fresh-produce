@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -295,14 +296,22 @@
             margin-left: 1rem;
             color: var(--dark-text);
             font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--accent-orange);
+            color: white;
+            border-radius: 50%;
         }
 
         .cart-count {
             position: absolute;
             top: -8px;
             right: -8px;
-            background-color: var(--accent-orange);
-            color: white;
+            background-color: var(--white);
+            color: var(--accent-orange);
             border-radius: 50%;
             width: 20px;
             height: 20px;
@@ -311,6 +320,7 @@
             justify-content: center;
             font-size: 0.7rem;
             font-weight: bold;
+            border: 1px solid var(--accent-orange);
             display: none;
         }
 
@@ -400,6 +410,25 @@
         .mobile-social a i {
             margin-right: 0.5rem;
             font-size: 1.2rem;
+        }
+
+        .mobile-cart-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            background-color: var(--accent-orange);
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .mobile-cart-btn .cart-count {
+            top: -5px;
+            right: -5px;
         }
 
         /* ===== HERO SECTION ===== */
@@ -1550,6 +1579,32 @@
             background-color: #ff5252;
         }
 
+        /* Quantity Controls */
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .qty-btn {
+            background: var(--light-bg);
+            border: none;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--primary-green);
+            color: white;
+        }
+
+        .qty {
+            min-width: 20px;
+            text-align: center;
+        }
+
         /* ===== MEDIA QUERIES ===== */
         @media (max-width: 992px) {
             .nav-links {
@@ -1557,7 +1612,9 @@
             }
             
             .nav-cta {
-                display: none;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
             }
             
             .menu-toggle {
@@ -1680,7 +1737,7 @@
             <div class="plant-animation">
                 <i class="fas fa-seedling"></i>
             </div>
-            <div class="preloader-text">FreshHarvest</div>
+            <div class="preloader-text"></div>
         </div>
     </div>
 
@@ -1703,6 +1760,11 @@
         <div class="mobile-social">
             <a href="https://wa.me/265999235420" class="whatsapp-btn"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
             <a href="tel:+265999235420" class="call-btn"><i class="fas fa-phone"></i> Call Now</a>
+            <div class="mobile-cart-btn">
+                <i class="fas fa-shopping-cart"></i>
+                <span id="mobile-cart-count" class="cart-count">0</span>
+                View Cart
+            </div>
         </div>
     </div>
 
@@ -1781,7 +1843,7 @@
                 <div class="product-details">
                     <h3>Fresh Tomatoes</h3>
                     <p>Juicy and ripe, perfect for salads and cooking</p>
-                    <div class="product-price"></div>
+                    <div class="product-price">MK 1,500/kg</div>
                     <div class="product-actions">
                         <button class="btn-primary add-to-cart-btn" data-id="tomatoes" data-name="Fresh Tomatoes" data-price="1500" data-image="images/tomatoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
                         <button class="btn-secondary quick-view-btn" data-product="tomatoes"><i class="fas fa-eye"></i> Quick View</button>
@@ -2145,6 +2207,7 @@
                     <span>Loyalty Points:</span>
                     <span id="cart-points">0 pts</span>
                 </div>
+                <button class="btn-secondary" id="clear-cart-btn">Clear Cart</button>
                 <a href="https://wa.me/265999235420" class="btn-primary" id="whatsapp-checkout">
                     <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
                 </a>
@@ -2331,7 +2394,7 @@
                 'onions': {
                     id: 'onions',
                     name: 'Fresh Onions',
-                    description: 'Strong-flavored onions perfect for all your cooking needs. Adds depth and flavor to any dish. Our onions are sun-dried for optimal storage and deliver that perfect punch of flavor to your meals.',
+                    description: 'Strong-flavored onions perfect for all your cooking needs. Adds depth and flavor to any dish. Our onions are sun-dried for optimal storage and optimal punch of flavor to your meals.',
                     image: 'images/oinons.jpeg',
                     price: 'MK 1,000/kg',
                     priceValue: 1000,
@@ -2402,6 +2465,20 @@
                     showNotification('Item removed from cart');
                 }
 
+                updateQuantity(productId, delta) {
+                    const item = this.items.find(item => item.id === productId);
+                    if (item) {
+                        item.quantity += delta;
+                        if (item.quantity < 1) {
+                            this.removeItem(productId);
+                        } else {
+                            this.calculateTotal();
+                            this.saveToLocalStorage();
+                            this.updateCartUI();
+                        }
+                    }
+                }
+
                 calculateTotal() {
                     this.total = this.items.reduce((sum, item) => {
                         return sum + (item.priceValue * item.quantity);
@@ -2433,11 +2510,17 @@
 
                 updateCartUI() {
                     const cartCount = document.getElementById('cart-count');
+                    const mobileCartCount = document.getElementById('mobile-cart-count');
                     const totalItems = this.items.reduce((sum, item) => sum + item.quantity, 0);
                     
                     if (cartCount) {
                         cartCount.textContent = totalItems;
                         cartCount.style.display = totalItems > 0 ? 'flex' : 'none';
+                    }
+                    
+                    if (mobileCartCount) {
+                        mobileCartCount.textContent = totalItems;
+                        mobileCartCount.style.display = totalItems > 0 ? 'flex' : 'none';
                     }
                 }
 
@@ -2462,9 +2545,14 @@
                                 <img src="${item.image}" alt="${item.name}" loading="lazy">
                                 <div class="cart-item-details">
                                     <h4>${item.name}</h4>
-                                    <p>${item.price} × ${item.quantity}</p>
+                                    <p>MK ${item.priceValue.toLocaleString()} × ${item.quantity}</p>
                                 </div>
                                 <div class="cart-item-actions">
+                                    <div class="qty-controls">
+                                        <button class="qty-btn minus" data-id="${item.id}">-</button>
+                                        <span class="qty">${item.quantity}</span>
+                                        <button class="qty-btn plus" data-id="${item.id}">+</button>
+                                    </div>
                                     <button class="remove-item" data-id="${item.id}">
                                         <i class="fas fa-trash"></i>
                                     </button>
@@ -2486,7 +2574,7 @@
                     let message = "Hello FreshHarvest! I'd like to place an order:\n\n";
                     
                     this.items.forEach(item => {
-                        message += `- ${item.name} (${item.price}) × ${item.quantity}\n`;
+                        message += `- ${item.name} (MK ${item.priceValue.toLocaleString()}) × ${item.quantity}\n`;
                     });
                     
                     message += `\nTotal: MK ${this.total.toLocaleString()}\n`;
@@ -2535,6 +2623,15 @@
             const cartBtn = document.querySelector('.cart-btn');
             
             cartBtn.addEventListener('click', () => {
+                cart.renderCartItems();
+                cartModal.style.display = 'block';
+                document.body.style.overflow = 'hidden';
+            });
+
+            const mobileCartBtn = document.querySelector('.mobile-cart-btn');
+            mobileCartBtn.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
                 cart.renderCartItems();
                 cartModal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
@@ -2592,7 +2689,7 @@
                 }
             });
 
-            // Remove item from cart
+            // Remove item from cart or update quantity
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('remove-item') || e.target.closest('.remove-item')) {
                     const btn = e.target.classList.contains('remove-item') ? 
@@ -2600,7 +2697,23 @@
                     
                     const productId = btn.dataset.id;
                     cart.removeItem(productId);
+                    cart.renderCartItems();
+                } else if (e.target.classList.contains('qty-btn') || e.target.closest('.qty-btn')) {
+                    const btn = e.target.classList.contains('qty-btn') ? 
+                        e.target : e.target.closest('.qty-btn');
+                    
+                    const productId = btn.dataset.id;
+                    const delta = btn.classList.contains('plus') ? 1 : -1;
+                    cart.updateQuantity(productId, delta);
+                    cart.renderCartItems();
                 }
+            });
+
+            // Clear cart
+            const clearCartBtn = document.getElementById('clear-cart-btn');
+            clearCartBtn.addEventListener('click', () => {
+                cart.clearCart();
+                cart.renderCartItems();
             });
 
             // Counter Animation for About Stats
@@ -2753,3 +2866,4 @@
     </script>
 </body>
 </html>
+```
