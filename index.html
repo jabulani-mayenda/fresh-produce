@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -647,13 +646,6 @@
             flex-grow: 1;
         }
 
-        .product-price {
-            font-size: 1.2rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
         .product-actions {
             display: flex;
             justify-content: center;
@@ -1257,13 +1249,6 @@
             margin-bottom: 1rem;
         }
 
-        .modal-price {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary-green);
-            margin-bottom: 1rem;
-        }
-
         .modal-description {
             color: var(--light-text);
             margin-bottom: 1.5rem;
@@ -1601,8 +1586,10 @@
         }
 
         .qty {
-            min-width: 20px;
+            width: 40px;
             text-align: center;
+            border: 1px solid var(--light-bg);
+            border-radius: 4px;
         }
 
         /* ===== MEDIA QUERIES ===== */
@@ -1737,14 +1724,14 @@
             <div class="plant-animation">
                 <i class="fas fa-seedling"></i>
             </div>
-            <div class="preloader-text"></div>
+            <div class="preloader-text">FreshHarvest</div>
         </div>
     </div>
 
     <!-- Mobile Menu -->
     <div class="mobile-menu">
         <div class="mobile-menu-header">
-            <div class="mobile-logo"></div>
+            <div class="mobile-logo">lilongwe LOFT</div>
             <div class="close-menu">
                 <i class="fas fa-times"></i>
             </div>
@@ -1823,7 +1810,7 @@
     <section class="products" id="products">
         <div class="section-header">
             <h2 class="section-title">OUR <span>PRODUCTS</span></h2>
-            <p class="section-subtitle">Fresh from our farms to your table</p>
+            <p class="section-subtitle"></p>
         </div>
         
         <div class="category-filters">
@@ -1832,6 +1819,8 @@
             <button class="filter-btn" data-category="fruits">Fruits</button>
             <button class="filter-btn" data-category="herbs">Herbs</button>
         </div>
+        
+        <input type="text" id="product-search" placeholder="Search products..." style="width:100%; max-width:400px; margin:1rem auto; display:block; padding:0.5rem; border-radius:20px; border:1px solid var(--light-green);">
         
         <div class="products-container">
             <!-- Product 1 -->
@@ -1843,9 +1832,14 @@
                 <div class="product-details">
                     <h3>Fresh Tomatoes</h3>
                     <p>Juicy and ripe, perfect for salads and cooking</p>
-                    <div class="product-price">MK 1,500/kg</div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="tomatoes" data-name="Fresh Tomatoes" data-price="1500" data-image="images/tomatoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="tomatoes" data-name="Fresh Tomatoes" data-image="images/tomatoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Fresh Tomatoes"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="tomatoes"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1859,9 +1853,14 @@
                 <div class="product-details">
                     <h3>Fresh Carrots</h3>
                     <p>Sweet and crunchy, rich in vitamin A</p>
-                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="carrots" data-name="Fresh Carrots" data-price="1200" data-image="images/carrot.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="carrots" data-name="Fresh Carrots" data-image="images/carrot.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Fresh Carrots"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="carrots"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1876,9 +1875,14 @@
                 <div class="product-details">
                     <h3>Fresh Onions</h3>
                     <p>Strong flavor, perfect for all dishes</p>
-                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="onions" data-name="Fresh Onions" data-price="1000" data-image="images/oinons.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="onions" data-name="Fresh Onions" data-image="images/oinons.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Fresh Onions"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="onions"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1892,9 +1896,14 @@
                 <div class="product-details">
                     <h3>Ripe Bananas</h3>
                     <p>Sweet and nutritious, great for snacks</p>
-                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="bananas" data-name="Ripe Bananas" data-price="800" data-image="images/banana.jpg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="bananas" data-name="Ripe Bananas" data-image="images/banana.jpg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Ripe Bananas"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="bananas"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1909,9 +1918,14 @@
                 <div class="product-details">
                     <h3>Sweet Mangoes</h3>
                     <p>Juicy and flavorful, limited season</p>
-                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="mangoes" data-name="Sweet Mangoes" data-price="1200" data-image="images/mangoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="mangoes" data-name="Sweet Mangoes" data-image="images/mangoes.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Sweet Mangoes"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="mangoes"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1925,9 +1939,14 @@
                 <div class="product-details">
                     <h3>Fresh Basil</h3>
                     <p>Aromatic herb for cooking and teas</p>
-                    <div class="product-price"></div>
                     <div class="product-actions">
-                        <button class="btn-primary add-to-cart-btn" data-id="basil" data-name="Fresh Basil" data-price="500" data-image="images/herbla.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
+                        <button class="btn-primary add-to-cart-btn" data-id="basil" data-name="Fresh Basil" data-image="images/herbla.jpeg"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" data-name="Fresh Basil"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary quick-view-btn" data-product="basil"><i class="fas fa-eye"></i> Quick View</button>
                     </div>
                 </div>
@@ -1972,8 +1991,7 @@
             <div class="delivery-schedule">
                 <h4 class="schedule-title">Delivery Schedule</h4>
                 <div class="schedule-times">
-                    <div class="time-slot">6:00 PM - 7:00 PM</div>
-                    <div class="time-slot">8:00 PM - 10:00 PM</div>
+                    <div class="time-slot">8:00 AM - 6:00 PM</div>
                 </div>
             </div>
             
@@ -2179,10 +2197,15 @@
                 </div>
                 <div class="modal-details">
                     <h3 id="modal-product-name"></h3>
-                    <div class="modal-price" id="modal-product-price"></div>
                     <p class="modal-description" id="modal-product-description"></p>
                     <div class="modal-actions">
+                        <div class="qty-controls">
+                            <button class="qty-btn minus">-</button>
+                            <input type="number" class="qty" value="1" min="1">
+                            <button class="qty-btn plus">+</button>
+                        </div>
                         <button class="btn-primary add-to-cart-btn" id="modal-add-to-cart"><i class="fas fa-cart-plus"></i> Add to Cart</button>
+                        <button class="btn-secondary direct-order-btn" id="modal-direct-order"><i class="fas fa-phone"></i> Order Now</button>
                         <button class="btn-secondary close-modal-btn"><i class="fas fa-times"></i> Close</button>
                     </div>
                 </div>
@@ -2199,15 +2222,6 @@
                 <p>Your cart is empty</p>
             </div>
             <div class="cart-summary">
-                <div class="cart-total">
-                    <span>Total:</span>
-                    <span id="cart-total-amount">MK 0</span>
-                </div>
-                <div class="cart-points">
-                    <span>Loyalty Points:</span>
-                    <span id="cart-points">0 pts</span>
-                </div>
-                <button class="btn-secondary" id="clear-cart-btn">Clear Cart</button>
                 <a href="https://wa.me/265999235420" class="btn-primary" id="whatsapp-checkout">
                     <i class="fab fa-whatsapp"></i> Checkout via WhatsApp
                 </a>
@@ -2237,7 +2251,7 @@
                             <div class="delivery-time">6:00 PM - 7:00 PM</div>
                             <div class="delivery-time">8:00 PM - 10:00 PM</div>
                         </div>
-                        <p style="margin-top: 1rem;">Delivery fee: MK 1,500 per order (free for orders over MK 10,000)</p>
+                        <p style="margin-top: 1rem;"></p>
                     </div>
                     
                     <div class="modal-actions">
@@ -2350,6 +2364,22 @@
                 });
             }
 
+            // Product Search
+            const searchInput = document.getElementById('product-search');
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const products = document.querySelectorAll('.product-card');
+                products.forEach(product => {
+                    const name = product.querySelector('h3').textContent.toLowerCase();
+                    const desc = product.querySelector('p').textContent.toLowerCase();
+                    if (name.includes(searchTerm) || desc.includes(searchTerm)) {
+                        product.style.display = 'block';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                });
+            });
+
             // Load More Products
             const loadMoreBtn = document.getElementById('load-more-btn');
             let visibleProducts = 6;
@@ -2378,8 +2408,6 @@
                     name: 'Fresh Tomatoes',
                     description: 'Juicy and ripe tomatoes, freshly picked from our farms. Perfect for salads, sauces, and cooking. Grown without harmful pesticides. Our tomatoes are hand-picked daily to ensure maximum freshness and flavor.',
                     image: 'images/tomatoes.jpeg',
-                    price: 'MK 1,500/kg',
-                    priceValue: 1500,
                     category: 'vegetables'
                 },
                 'carrots': {
@@ -2387,17 +2415,13 @@
                     name: 'Fresh Carrots',
                     description: 'Sweet and crunchy carrots, rich in vitamin A and antioxidants. Great for snacking, juicing, or cooking. Grown in nutrient-rich soil, our carrots are crisp, sweet, and packed with nutrition.',
                     image: 'images/carrot.jpeg',
-                    price: 'MK 1,200/kg',
-                    priceValue: 1200,
                     category: 'vegetables'
                 },
                 'onions': {
                     id: 'onions',
                     name: 'Fresh Onions',
-                    description: 'Strong-flavored onions perfect for all your cooking needs. Adds depth and flavor to any dish. Our onions are sun-dried for optimal storage and optimal punch of flavor to your meals.',
+                    description: 'Strong-flavored onions perfect for all your cooking needs. Adds depth and flavor to any dish. Our onions are sun-dried for optimal storage and deliver that perfect punch of flavor to your meals.',
                     image: 'images/oinons.jpeg',
-                    price: 'MK 1,000/kg',
-                    priceValue: 1000,
                     category: 'vegetables'
                 },
                 'bananas': {
@@ -2405,8 +2429,6 @@
                     name: 'Ripe Bananas',
                     description: 'Sweet and nutritious bananas, perfect for snacks or smoothies. A great source of potassium and natural energy. Grown on our local plantations, these bananas are tree-ripened for perfect sweetness.',
                     image: 'images/banana.jpg',
-                    price: 'MK 800/bunch',
-                    priceValue: 800,
                     category: 'fruits'
                 },
                 'mangoes': {
@@ -2414,8 +2436,6 @@
                     name: 'Sweet Mangoes',
                     description: 'Juicy and flavorful mangoes, available seasonally. A tropical treat that\'s perfect for desserts or eating fresh. Our mangoes are hand-selected at peak ripeness for that perfect balance of sweetness and tang.',
                     image: 'images/mangoes.jpeg',
-                    price: 'MK 1,200/kg',
-                    priceValue: 1200,
                     category: 'fruits'
                 },
                 'basil': {
@@ -2423,8 +2443,6 @@
                     name: 'Fresh Basil',
                     description: 'Aromatic basil leaves perfect for cooking, teas, or garnishing. Adds a fresh flavor to Italian and Asian dishes. Grown in our herb garden, this basil is pesticide-free and packed with flavor.',
                     image: 'images/herbla.jpeg',
-                    price: 'MK 500/bunch',
-                    priceValue: 500,
                     category: 'herbs'
                 }
             };
@@ -2433,8 +2451,6 @@
             class ShoppingCart {
                 constructor() {
                     this.items = [];
-                    this.total = 0;
-                    this.points = 0;
                     this.loadFromLocalStorage();
                     this.updateCartUI();
                 }
@@ -2451,7 +2467,6 @@
                         });
                     }
                     
-                    this.calculateTotal();
                     this.saveToLocalStorage();
                     this.updateCartUI();
                     showNotification(`${product.name} added to cart!`);
@@ -2459,7 +2474,6 @@
 
                 removeItem(productId) {
                     this.items = this.items.filter(item => item.id !== productId);
-                    this.calculateTotal();
                     this.saveToLocalStorage();
                     this.updateCartUI();
                     showNotification('Item removed from cart');
@@ -2472,20 +2486,10 @@
                         if (item.quantity < 1) {
                             this.removeItem(productId);
                         } else {
-                            this.calculateTotal();
                             this.saveToLocalStorage();
                             this.updateCartUI();
                         }
                     }
-                }
-
-                calculateTotal() {
-                    this.total = this.items.reduce((sum, item) => {
-                        return sum + (item.priceValue * item.quantity);
-                    }, 0);
-                    
-                    // Calculate points (1 point for every MK 1000 spent)
-                    this.points = Math.floor(this.total / 1000);
                 }
 
                 saveToLocalStorage() {
@@ -2496,14 +2500,11 @@
                     const savedCart = localStorage.getItem('freshHarvestCart');
                     if (savedCart) {
                         this.items = JSON.parse(savedCart);
-                        this.calculateTotal();
                     }
                 }
 
                 clearCart() {
                     this.items = [];
-                    this.total = 0;
-                    this.points = 0;
                     localStorage.removeItem('freshHarvestCart');
                     this.updateCartUI();
                 }
@@ -2526,14 +2527,10 @@
 
                 renderCartItems() {
                     const cartItemsContainer = document.getElementById('cart-items');
-                    const cartTotalAmount = document.getElementById('cart-total-amount');
-                    const cartPoints = document.getElementById('cart-points');
                     const whatsappCheckout = document.getElementById('whatsapp-checkout');
                     
                     if (this.items.length === 0) {
                         cartItemsContainer.innerHTML = '<p>Your cart is empty</p>';
-                        cartTotalAmount.textContent = 'MK 0';
-                        cartPoints.textContent = '0 pts';
                         return;
                     }
                     
@@ -2545,7 +2542,7 @@
                                 <img src="${item.image}" alt="${item.name}" loading="lazy">
                                 <div class="cart-item-details">
                                     <h4>${item.name}</h4>
-                                    <p>MK ${item.priceValue.toLocaleString()} × ${item.quantity}</p>
+                                    <p>Quantity: ${item.quantity}</p>
                                 </div>
                                 <div class="cart-item-actions">
                                     <div class="qty-controls">
@@ -2562,8 +2559,6 @@
                     });
                     
                     cartItemsContainer.innerHTML = itemsHTML;
-                    cartTotalAmount.textContent = `MK ${this.total.toLocaleString()}`;
-                    cartPoints.textContent = `${this.points} pts`;
                     
                     // Update WhatsApp checkout link
                     const checkoutMessage = this.generateCheckoutMessage();
@@ -2574,12 +2569,10 @@
                     let message = "Hello FreshHarvest! I'd like to place an order:\n\n";
                     
                     this.items.forEach(item => {
-                        message += `- ${item.name} (MK ${item.priceValue.toLocaleString()}) × ${item.quantity}\n`;
+                        message += `- ${item.name} × ${item.quantity}\n`;
                     });
                     
-                    message += `\nTotal: MK ${this.total.toLocaleString()}\n`;
-                    message += `Loyalty Points: ${this.points} pts\n\n`;
-                    message += "Please confirm availability and delivery time. Thank you!";
+                    message += "\nPlease confirm availability and delivery time. Thank you!";
                     
                     return message;
                 }
@@ -2600,7 +2593,6 @@
                     
                     if (product) {
                         document.getElementById('modal-product-name').textContent = product.name;
-                        document.getElementById('modal-product-price').textContent = product.price;
                         document.getElementById('modal-product-description').textContent = product.description;
                         document.getElementById('modal-product-image').src = product.image;
                         document.getElementById('modal-product-image').alt = product.name;
@@ -2609,8 +2601,11 @@
                         const modalAddToCart = document.getElementById('modal-add-to-cart');
                         modalAddToCart.dataset.id = product.id;
                         modalAddToCart.dataset.name = product.name;
-                        modalAddToCart.dataset.price = product.priceValue;
                         modalAddToCart.dataset.image = product.image;
+                        
+                        // Update directorder in modal
+                        const modalDirectOrder = document.getElementById('modal-direct-order');
+                        modalDirectOrder.dataset.name = product.name;
                         
                         productModal.style.display = 'block';
                         document.body.style.overflow = 'hidden';
@@ -2676,16 +2671,45 @@
                     const btn = e.target.classList.contains('add-to-cart-btn') ? 
                         e.target : e.target.closest('.add-to-cart-btn');
                     
+                    const qtyInput = btn.parentElement.querySelector('.qty');
+                    const quantity = parseInt(qtyInput.value) || 1;
+                    
                     const product = {
                         id: btn.dataset.id,
                         name: btn.dataset.name,
-                        price: btn.dataset.price,
-                        priceValue: parseInt(btn.dataset.price),
                         image: btn.dataset.image,
                         category: productsData[btn.dataset.id]?.category || 'vegetables'
                     };
                     
-                    cart.addItem(product);
+                    cart.addItem(product, quantity);
+                }
+            });
+
+            // Direct order functionality
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('direct-order-btn') || e.target.closest('.direct-order-btn')) {
+                    const btn = e.target.classList.contains('direct-order-btn') ? 
+                        e.target : e.target.closest('.direct-order-btn');
+                    
+                    const name = btn.dataset.name;
+                    window.open(`https://wa.me/265999235420?text=I want to order ${encodeURIComponent(name)}`, '_blank');
+                }
+            });
+
+            // Quantity buttons in product cards and modal
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('qty-btn') || e.target.closest('.qty-btn')) {
+                    const btn = e.target.classList.contains('qty-btn') ? 
+                        e.target : e.target.closest('.qty-btn');
+                    
+                    const qtyInput = btn.parentElement.querySelector('.qty');
+                    let qty = parseInt(qtyInput.value);
+                    if (btn.classList.contains('plus')) {
+                        qty++;
+                    } else if (btn.classList.contains('minus') && qty > 1) {
+                        qty--;
+                    }
+                    qtyInput.value = qty;
                 }
             });
 
@@ -2707,13 +2731,6 @@
                     cart.updateQuantity(productId, delta);
                     cart.renderCartItems();
                 }
-            });
-
-            // Clear cart
-            const clearCartBtn = document.getElementById('clear-cart-btn');
-            clearCartBtn.addEventListener('click', () => {
-                cart.clearCart();
-                cart.renderCartItems();
             });
 
             // Counter Animation for About Stats
@@ -2866,4 +2883,3 @@
     </script>
 </body>
 </html>
-```
